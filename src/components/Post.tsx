@@ -1,9 +1,9 @@
+import {ChangeEvent, FormEvent, InvalidEvent, useState} from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { Comment } from "./Comment.tsx";
 import { Avatar}  from "./Avatar.tsx";
 import styles from "./Post.module.css";
-import {useState} from "react";
 
 interface Author {
     name: string;
@@ -11,9 +11,14 @@ interface Author {
     avatarUrl: string;
 }
 
+interface Content {
+    type: 'paragraph' | 'link';
+    content: string;
+}
+
 interface PostProps {
     author: Author;
-    content: string;
+    content: Content[];
     publishedAt: Date;
 }
 export function Post({ author, content, publishedAt }: PostProps) {
@@ -32,22 +37,22 @@ export function Post({ author, content, publishedAt }: PostProps) {
         addSuffix: true
     });
 
-    function handleNewCommentChange() {
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('');
         setNewCommentText(event.target.value);
 
     }
 
-    function handleCreateNewComment() {
+    function handleCreateNewComment(event: FormEvent) {
         event.preventDefault();
         setComments([...comments, newCommentText]);
         setNewCommentText('');
     }
 
-    function handleNewCommentInvalid() {
+    function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity('Esse compo é obrigatório.');
     }
-    function deleteComment(commentToDelete) {
+    function deleteComment(commentToDelete: string) {
         const commentWithoutDeletedOne = comments.filter(comment => {
             return comment !==commentToDelete;
         })
