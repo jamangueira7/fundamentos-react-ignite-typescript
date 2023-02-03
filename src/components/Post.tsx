@@ -1,8 +1,8 @@
 import {ChangeEvent, FormEvent, InvalidEvent, useState} from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import { Comment } from "./Comment.tsx";
-import { Avatar}  from "./Avatar.tsx";
+import { Comment } from "./Comment";
+import { Avatar}  from "./Avatar";
 import styles from "./Post.module.css";
 
 interface Author {
@@ -12,14 +12,14 @@ interface Author {
 }
 
 interface Content {
-    type: 'paragraph' | 'link';
+    type: "paragraph" | "link";
     content: string;
 }
 
 interface PostProps {
     author: Author;
-    content: Content[];
     publishedAt: Date;
+    content: Content[]
 }
 export function Post({ author, content, publishedAt }: PostProps) {
     const [comments, setComments] = useState([
@@ -66,7 +66,10 @@ export function Post({ author, content, publishedAt }: PostProps) {
             <header>
                 <div className={styles.author}>
 
-                    <Avatar src={author.avatarUrl} />
+                    <Avatar
+                      src={author.avatarUrl}
+                      alt="user"
+                    />
 
                     <div className={styles.authorInfo}>
                         <strong>{author.name}</strong>

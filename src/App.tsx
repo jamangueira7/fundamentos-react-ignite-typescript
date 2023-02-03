@@ -45,11 +45,12 @@ function App() {
             <main>
                 {
                     posts.map(post => {
+                      console.log(post.content)
                         return (
                             <Post
                                 key={post.id}
                                 author={post.author}
-                                content={post.content}
+                                content={post.content as []}
                                 publishedAt={post.publishedAt}
                             />
                         );
